@@ -17,4 +17,3 @@ dependencies:
   - python-duckdb
   - rdflib
   - pandas_schema
-
