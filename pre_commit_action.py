@@ -1,5 +1,6 @@
 import codecs
 import os.path
+import subprocess
 
 with open("README.md", encoding="UTF-8") as fh:
     long_description = fh.read()
@@ -33,7 +34,32 @@ def update_version_in_pyproject(pyproject_file, version):
         f.write(new_pyproject_content)
 
 
-version_from_init = get_version("sdrf_pipelines/__init__.py")
-version_from_pyproject = get_version("pyproject.toml")
-if version_from_init != version_from_pyproject:
-    update_version_in_pyproject("pyproject.toml", version_from_init)
+def export_requirements():
+    # Export main dependencies
+    subprocess.run(
+        ["poetry", "export", "-f", "requirements.txt", "-o", "requirements.txt", "--without-hashes"],
+        check=True,
+    )
+    # Export dev dependencies
+    subprocess.run(
+        [
+            "poetry",
+            "export",
+            "-f",
+            "requirements.txt",
+            "-o",
+            "requirements-dev.txt",
+            "--with",
+            "dev",
+            "--without-hashes",
+        ],
+        check=True,
+    )
+
+
+if __name__ == "__main__":
+    version_from_init = get_version("sdrf_pipelines/__init__.py")
+    version_from_pyproject = get_version("pyproject.toml")
+    if version_from_init != version_from_pyproject:
+        update_version_in_pyproject("pyproject.toml", version_from_init)
+    export_requirements()
