@@ -14,16 +14,13 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Bio-Informatics"
 ]
+packages = [
+    {include = "sdrf_pipelines"}
+]
+include = [
+    "LICENSE",
+]
 
-[tool.poetry.include]
-"LICENSE" = { path = "LICENSE" }
-"sdrf_pipelines/openms/unimod.xml" = { path = "sdrf_pipelines/openms/unimod.xml" }
-"sdrf_pipelines/sdrf_merge/param2sdrf.yml" = { path = "sdrf_pipelines/sdrf_merge/param2sdrf.yml" }
-
-[tool.poetry.package.include]
-"*.xml" = { path = "sdrf_pipelines" }
-"*.parquet" = { path = "sdrf_pipelines" }
-"*.yml" = { path = "sdrf_pipelines" }
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
